@@ -1,0 +1,14 @@
+1. Serveur unique (IP 8.8.8.8) hébergeant tous les composants.
+2. DNS : Enregistrement A pour `www.foobar.com` pointe vers l'IP 8.8.8.8.
+3. Serveur Web (Nginx) : Gère les requêtes HTTP(S), sert le contenu statique, redirige les requêtes dynamiques vers le serveur d'application.
+4. Serveur d'application : Exécute le code côté serveur (PHP, Python, etc.) pour générer du contenu dynamique et interagir avec la base de données.
+5. Base de données (MySQL) : Stocke les données persistantes (utilisateurs, produits, etc.).
+6. Communication utilisateur → Serveur :
+   - L'utilisateur entre `www.foobar.com` → DNS résout en IP 8.8.8.8.
+   - Nginx traite la requête et sert les fichiers.
+   - Si besoin de données dynamiques, la requête va vers l'application → réponse renvoyée via Nginx.
+   
+Problèmes :
+1. SPOF (Point de défaillance unique) : Si le serveur tombe, tout est inactif.
+2. Temps d'arrêt lors de la maintenance (redémarrage du serveur).
+3. Pas de scalabilité horizontale pour gérer un trafic élevé.

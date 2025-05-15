@@ -1,0 +1,39 @@
+1. **1 Serveur Supplémentaire** :
+   - Un serveur supplémentaire est ajouté pour faire évoluer l'infrastructure. Ce serveur peut être dédié à un serveur web, un serveur d'application ou un nœud de base de données, en fonction des besoins de mise à l'échelle.
+
+2. **2 Load Balancers (Cluster HAProxy)** :
+   - **Pourquoi l'ajouter ?** : Afin de mieux répartir le trafic et éviter un point de défaillance unique, nous utilisons maintenant deux **load balancers en cluster** HAProxy. Ils travaillent ensemble pour répartir la charge et assurer une haute disponibilité.
+   - **Configuration du Cluster** : Les deux load balancers peuvent diriger le trafic vers les serveurs web et d'application, garantissant qu'en cas de défaillance d'un load balancer, l'autre puisse prendre le relais.
+
+3. **Séparation des Composants** :
+   - **Serveur Web** : Un serveur dédié gère les requêtes web et sert le contenu statique (Nginx).
+   - **Serveur d'Application** : Un autre serveur dédié traite les requêtes dynamiques, exécutant la logique métier de l'application (PHP, Python, Node.js, etc.).
+   - **Serveur de Base de Données** : La base de données est hébergée sur un serveur distinct pour gérer les opérations liées aux données (MySQL ou similaire).
+
+---
+
+### **Explication des éléments ajoutés :**
+
+1. **1 Serveur Supplémentaire** :
+   - **Pourquoi l'ajouter ?** : Ajouter un serveur supplémentaire améliore la scalabilité en répartissant les tâches sur plusieurs serveurs. Si le trafic augmente, d'autres serveurs web ou d'application peuvent être ajoutés, garantissant de meilleures performances et une plus grande fiabilité.
+
+2. **2 Load Balancers (Cluster HAProxy)** :
+   - **Pourquoi l'ajouter ?** : Avoir deux load balancers augmente la redondance et la répartition de la charge. Si l'un des load balancers échoue, l'autre prend le relais, ce qui réduit les risques de temps d'arrêt et assure une disponibilité continue. Cela permet aussi de mieux répartir la charge entre les serveurs.
+
+3. **Séparation des composants sur des serveurs dédiés** :
+   - **Pourquoi séparer les composants ?** :
+     - **Serveur Web** : Il est dédié à la gestion des requêtes HTTP(S), ce qui réduit la charge sur le serveur d'application et améliore l'efficacité dans la gestion des fichiers statiques.
+     - **Serveur d'Application** : Il est dédié à l'exécution de la logique métier et au traitement du contenu dynamique. Le séparer du serveur web permet de mieux évoluer lorsque la charge augmente.
+     - **Serveur de Base de Données** : En isolant la base de données sur un serveur séparé, on évite la concurrence pour les ressources avec les autres services (web et application), ce qui améliore les performances, la scalabilité et permet à la base de données de se développer indépendamment.
+
+---
+
+### **Résumé** :
+
+```plaintext
+1. **1 Serveur Supplémentaire** : Permet d'améliorer la scalabilité et de mieux répartir les tâches (Web, App, DB).
+2. **2 Load Balancers (Cluster HAProxy)** : Assure une haute disponibilité et une répartition plus efficace de la charge, évitant un point de défaillance unique.
+3. **Séparation des Composants** : 
+   - **Serveur Web** : Gère les requêtes HTTP et sert les fichiers statiques.
+   - **Serveur d'Application** : Traite les requêtes dynamiques et exécute la logique métier.
+   - **Serveur de Base de Données** : Gère les requêtes de base de données sans interférer avec les autres services.

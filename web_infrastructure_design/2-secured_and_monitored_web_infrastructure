@@ -1,0 +1,26 @@
+1. **Pare-feu** :
+   - **3 pare-feu** (un par serveur) : Protège chaque serveur en filtrant le trafic entrant et sortant, en bloquant les requêtes malveillantes et en empêchant les accès non autorisés.
+   - Placés entre les utilisateurs et les serveurs, les pare-feu assurent que seul le trafic légitime puisse accéder à l'infrastructure.
+
+2. **Certificat SSL** :
+   - **Certificat SSL** installé sur le load balancer pour servir le trafic via **HTTPS**.
+   - **Pourquoi HTTPS ?** : HTTPS chiffre le trafic entre l'utilisateur et le serveur, garantissant la sécurité des données sensibles (mots de passe, informations bancaires) contre les attaques de type "man-in-the-middle".
+
+3. **Clients de surveillance** :
+   - **3 clients de surveillance** (ex. Sumologic, Prometheus) installés sur chaque serveur.
+   - Ces clients collectent des données de performance (utilisation du CPU, mémoire, QPS) et les envoient à un système central de surveillance pour analyse et alertes.
+
+4. **Load Balancer (HAProxy)** :
+   - Répartit le trafic entre les serveurs web et d'application.
+   - **Terminaison SSL** : Le certificat SSL est installé au niveau du load balancer, et le trafic est décrypté à ce niveau avant d'être transmis aux serveurs backend.
+
+5. **Serveur Web (Nginx)** :
+   - Gère les requêtes HTTP(S) entrantes, sert les fichiers statiques et transmet les requêtes dynamiques au serveur d'application.
+
+6. **Serveur d'application** :
+   - Exécute la logique métier du site (PHP, Python, Node.js, etc.).
+   - Communique avec la base de données pour récupérer ou modifier les données.
+
+7. **Base de données (MySQL - Cluster Primary-Replica)** :
+   - **Primary (Master)** : Gère les opérations d'écriture.
+   - **Replica (Slave)** : Gère les requêtes de lecture pour distribuer la charge et améliorer la performance.

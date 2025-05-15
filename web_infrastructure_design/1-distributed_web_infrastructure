@@ -1,0 +1,26 @@
+1. **Load Balancer (HAProxy)** :
+   - Distribue le trafic entre les serveurs web/app.
+   - Algorithme : **round-robin** (répartition équitable des requêtes).
+   - **Active-Active** : Tous les serveurs sont actifs.
+
+2. **Serveur Web (Nginx)** :
+   - Gère les requêtes HTTP(S), sert les fichiers statiques.
+   - Transmet les requêtes dynamiques au serveur d'application.
+
+3. **Serveur d'application** :
+   - Exécute la logique métier (PHP, Python, Node.js).
+   - Communique avec la base de données pour récupérer/modifier des données.
+
+4. **Base de données (MySQL – Cluster Primary-Replica)** :
+   - **Primary (Master)** : Gère les écritures.
+   - **Replica (Slave)** : Gère les lectures pour alléger le Primary.
+
+5. **Fichiers d'application** :
+   - Le code source du site (HTML, CSS, JavaScript, etc.).
+
+---
+
+**Problèmes** :
+1. **SPOF** : Load balancer ou base de données peut être un point de défaillance unique.
+2. **Problèmes de sécurité** : Pas de firewall, pas de HTTPS (données non sécurisées).
+3. **Pas de monitoring** : Pas d'alerte en cas de défaillance, risque de temps d'arrêt non détecté.

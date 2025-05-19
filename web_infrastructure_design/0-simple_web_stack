@@ -1,14 +1,15 @@
-1. Serveur unique (IP 8.8.8.8) hébergeant tous les composants.
-2. DNS : Enregistrement A pour `www.foobar.com` pointe vers l'IP 8.8.8.8.
-3. Serveur Web (Nginx) : Gère les requêtes HTTP(S), sert le contenu statique, redirige les requêtes dynamiques vers le serveur d'application.
-4. Serveur d'application : Exécute le code côté serveur (PHP, Python, etc.) pour générer du contenu dynamique et interagir avec la base de données.
-5. Base de données (MySQL) : Stocke les données persistantes (utilisateurs, produits, etc.).
-6. Communication utilisateur → Serveur :
-   - L'utilisateur entre `www.foobar.com` → DNS résout en IP 8.8.8.8.
-   - Nginx traite la requête et sert les fichiers.
-   - Si besoin de données dynamiques, la requête va vers l'application → réponse renvoyée via Nginx.
+1. Single server (IP 8.8.8.8) hosting all components.
+2. DNS: The A record for `www.foobar.com` points to IP 8.8.8.8.
+3. Web server (Nginx): Handles HTTP(S) requests, serves static content, redirects dynamic requests to the application server.
+4. Application server: Executes server-side code (PHP, Python, etc.) to generate dynamic content and interact with the database.
+5. Database (MySQL): Stores persistent data (users, products, etc.).
+6. User → server communication:
+   - The user enters `www.foobar.com` → DNS resolves the IP 8.8.8.8.
+   - Nginx processes the request and serves the files.
+   - If dynamic data is required, the request is passed to the application → response returned by Nginx.
    
-Problèmes :
-1. SPOF (Point de défaillance unique) : Si le serveur tombe, tout est inactif.
-2. Temps d'arrêt lors de la maintenance (redémarrage du serveur).
-3. Pas de scalabilité horizontale pour gérer un trafic élevé.
+Problems:
+1. SPOF (Single Point of Failure): If the server fails, everything is inactive.
+2. Downtime during maintenance (server restart).
+3. No horizontal scalability to handle high traffic.
+

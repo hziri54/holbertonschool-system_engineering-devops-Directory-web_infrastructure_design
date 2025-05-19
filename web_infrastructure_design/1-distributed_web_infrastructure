@@ -1,26 +1,43 @@
-1. **Load Balancer (HAProxy)** :
-   - Distribue le trafic entre les serveurs web/app.
-   - Algorithme : **round-robin** (répartition équitable des requêtes).
-   - **Active-Active** : Tous les serveurs sont actifs.
+1. Load Balancer (HAProxy)
 
-2. **Serveur Web (Nginx)** :
-   - Gère les requêtes HTTP(S), sert les fichiers statiques.
-   - Transmet les requêtes dynamiques au serveur d'application.
+    Distributes traffic between web/app servers.
 
-3. **Serveur d'application** :
-   - Exécute la logique métier (PHP, Python, Node.js).
-   - Communique avec la base de données pour récupérer/modifier des données.
+    Algorithm: Round-robin (even distribution of requests).
 
-4. **Base de données (MySQL – Cluster Primary-Replica)** :
-   - **Primary (Master)** : Gère les écritures.
-   - **Replica (Slave)** : Gère les lectures pour alléger le Primary.
+    Active-Active setup: All servers are active simultaneously.
 
-5. **Fichiers d'application** :
-   - Le code source du site (HTML, CSS, JavaScript, etc.).
+2. Web Server (Nginx)
 
----
+    Handles HTTP(S) requests, serves static files.
 
-**Problèmes** :
-1. **SPOF** : Load balancer ou base de données peut être un point de défaillance unique.
-2. **Problèmes de sécurité** : Pas de firewall, pas de HTTPS (données non sécurisées).
-3. **Pas de monitoring** : Pas d'alerte en cas de défaillance, risque de temps d'arrêt non détecté.
+    Forwards dynamic requests to the application server.
+
+3. Application Server
+
+    Executes business logic (PHP, Python, Node.js, etc.).
+
+    Communicates with the database to retrieve/modify data.
+
+4. Database (MySQL – Primary-Replica Cluster)
+
+    Primary (Master): Handles write operations.
+
+    Replica (Slave): Handles read operations to reduce load on the Primary.
+
+5. Application Files
+
+    The source code of the site (HTML, CSS, JavaScript, etc.).
+
+Issues:
+
+    Single Point of Failure (SPOF):
+
+        The load balancer and the database can become single points of failure.
+
+    Security Issues:
+
+        No firewall, no HTTPS → unencrypted data transmission.
+
+    Lack of Monitoring:
+
+        No alert system in place → potential undetected downtime.
